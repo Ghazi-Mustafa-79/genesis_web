@@ -4,6 +4,8 @@ import { collection, addDoc, Timestamp } from "firebase/firestore";
 
 const MUNRegistrationForm = () => {
   const [formData, setFormData] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -12,27 +14,32 @@ const MUNRegistrationForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setSuccess(false);
 
     try {
       await addDoc(collection(db, "students"), {
         ...formData,
-        status: "Pending",
+        amount: 2000, // fixed registration fee
+        status: "Pending", // admin will verify payment
         createdAt: Timestamp.now(),
       });
 
-      alert("✅ Registration Submitted Successfully!");
+      setSuccess(true);
       setFormData({});
     } catch (error) {
       console.error("❌ Error saving form:", error);
       alert("❌ Error submitting form. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-[#f2eab8] flex items-center justify-center p-6">
+    <div className="min-h-screen bg-[#f2eab8] flex items-center justify-center md:mt-[60px] mt-[80px] p-6">
       <div className="w-full max-w-3xl bg-white/90 backdrop-blur-md border border-green-200 shadow-2xl rounded-2xl p-8">
         <h2 className="text-3xl font-bold text-center text-green-900 mb-6">
-          🏛️ Genesis MUN Registration
+          🏛️ Private Delegate Registration Form
         </h2>
 
         <form className="space-y-6" onSubmit={handleSubmit}>
@@ -47,8 +54,8 @@ const MUNRegistrationForm = () => {
                 name="fullName"
                 placeholder="Full Name"
                 onChange={handleChange}
-                className="border border-green-300 rounded-lg p-3 w-full focus:ring-2 focus:ring-green-600"
                 required
+                className="border border-green-300 rounded-lg p-3 w-full"
               />
               <input
                 type="text"
@@ -57,14 +64,14 @@ const MUNRegistrationForm = () => {
                 onFocus={(e) => (e.target.type = "date")}
                 onBlur={(e) => (e.target.type = "text")}
                 onChange={handleChange}
-                className="border border-green-300 rounded-lg p-3 w-full focus:ring-2 focus:ring-green-600"
                 required
+                className="border border-green-300 rounded-lg p-3 w-full"
               />
               <select
                 name="gender"
                 onChange={handleChange}
-                className="border border-green-300 rounded-lg p-3 w-full focus:ring-2 focus:ring-green-600"
                 required
+                className="border border-green-300 rounded-lg p-3 w-full"
               >
                 <option value="">Select Gender</option>
                 <option value="Male">Male</option>
@@ -75,32 +82,33 @@ const MUNRegistrationForm = () => {
                 name="nationality"
                 placeholder="Nationality"
                 onChange={handleChange}
-                className="border border-green-300 rounded-lg p-3 w-full focus:ring-2 focus:ring-green-600"
                 required
+                className="border border-green-300 rounded-lg p-3 w-full"
               />
               <input
                 type="tel"
                 name="contactNumber"
                 placeholder="Contact Number"
                 onChange={handleChange}
-                className="border border-green-300 rounded-lg p-3 w-full focus:ring-2 focus:ring-green-600"
                 required
+                className="border border-green-300 rounded-lg p-3 w-full"
               />
               <input
                 type="email"
                 name="email"
                 placeholder="Email Address"
+                value={formData.email || ""}
                 onChange={handleChange}
-                className="border border-green-300 rounded-lg p-3 w-full focus:ring-2 focus:ring-green-600"
                 required
+                className="border border-green-300 rounded-lg p-3 w-full"
               />
               <input
                 type="tel"
                 name="whatsapp"
                 placeholder="WhatsApp Number"
                 onChange={handleChange}
-                className="border border-green-300 rounded-lg p-3 w-full focus:ring-2 focus:ring-green-600"
                 required
+                className="border border-green-300 rounded-lg p-3 w-full"
               />
             </div>
           </div>
@@ -116,23 +124,23 @@ const MUNRegistrationForm = () => {
                 name="institution"
                 placeholder="Institution / School / College"
                 onChange={handleChange}
-                className="border border-green-300 rounded-lg p-3 w-full focus:ring-2 focus:ring-green-600"
                 required
+                className="border border-green-300 rounded-lg p-3 w-full"
               />
               <input
                 type="text"
                 name="grade"
                 placeholder="Grade / Year"
                 onChange={handleChange}
-                className="border border-green-300 rounded-lg p-3 w-full focus:ring-2 focus:ring-green-600"
                 required
+                className="border border-green-300 rounded-lg p-3 w-full"
               />
               <input
                 type="text"
                 name="fieldOfStudy"
                 placeholder="Field of Study (if applicable)"
                 onChange={handleChange}
-                className="border border-green-300 rounded-lg p-3 w-full focus:ring-2 focus:ring-green-600"
+                className="border border-green-300 rounded-lg p-3 w-full"
               />
             </div>
           </div>
@@ -146,8 +154,8 @@ const MUNRegistrationForm = () => {
               <select
                 name="attendedBefore"
                 onChange={handleChange}
-                className="border border-green-300 rounded-lg p-3 w-full focus:ring-2 focus:ring-green-600"
                 required
+                className="border border-green-300 rounded-lg p-3 w-full"
               >
                 <option value="">Have you attended any MUNs before?</option>
                 <option value="Yes">Yes</option>
@@ -158,12 +166,12 @@ const MUNRegistrationForm = () => {
                 name="previousMUNs"
                 placeholder="If yes, list previous MUNs"
                 onChange={handleChange}
-                className="border border-green-300 rounded-lg p-3 w-full focus:ring-2 focus:ring-green-600"
+                className="border border-green-300 rounded-lg p-3 w-full"
               />
               <select
                 name="previousPosition"
                 onChange={handleChange}
-                className="border border-green-300 rounded-lg p-3 w-full focus:ring-2 focus:ring-green-600"
+                className="border border-green-300 rounded-lg p-3 w-full"
               >
                 <option value="">Previous Position</option>
                 <option value="Delegate">Delegate</option>
@@ -185,103 +193,115 @@ const MUNRegistrationForm = () => {
                 name="committee"
                 placeholder="Committee Preference"
                 onChange={handleChange}
-                className="border border-green-300 rounded-lg p-3 w-full focus:ring-2 focus:ring-green-600"
                 required
+                className="border border-green-300 rounded-lg p-3 w-full"
               />
               <input
                 type="text"
                 name="firstCountry"
                 placeholder="First Country Preference"
                 onChange={handleChange}
-                className="border border-green-300 rounded-lg p-3 w-full focus:ring-2 focus:ring-green-600"
                 required
+                className="border border-green-300 rounded-lg p-3 w-full"
               />
               <input
                 type="text"
                 name="secondCountry"
                 placeholder="Second Country Preference"
                 onChange={handleChange}
-                className="border border-green-300 rounded-lg p-3 w-full focus:ring-2 focus:ring-green-600"
+                className="border border-green-300 rounded-lg p-3 w-full"
               />
               <input
                 type="text"
                 name="thirdCountry"
                 placeholder="Third Country Preference"
                 onChange={handleChange}
-                className="border border-green-300 rounded-lg p-3 w-full focus:ring-2 focus:ring-green-600"
+                className="border border-green-300 rounded-lg p-3 w-full"
               />
             </div>
           </div>
 
           {/* Payment Information */}
-          <div>
-            <h3 className="text-xl font-semibold text-green-800 mb-3">
-              Payment Information
-            </h3>
+          <h2 className="text-2xl md:text-3xl font-extrabold text-green-800 mb-8 text-center">
+            💳 Payment Information
+          </h2>
 
-            {/* Show your JazzCash Number */}
-            <div className="bg-green-50 border border-green-300 rounded-lg p-4 mb-5">
-              <p className="text-green-900 font-semibold">
-                Send your payment to:
-              </p>
-              <p className="text-lg font-bold text-green-700">
-                JazzCash Number: 0301-1234567
-              </p>
-              <p className="text-sm text-gray-600 mt-1">
-                Account Holder:{" "}
-                <span className="font-medium">SALMAN SAEED</span>
-              </p>
-            </div>
+          {/* Registration Fee */}
+          <div className="bg-yellow-50 border border-yellow-300 rounded-lg p-5 mb-8 text-center">
+            <p className="text-lg font-semibold text-yellow-900">
+              Registration Fee:
+            </p>
+            <p className="text-2xl font-bold text-green-700">
+              Rs. 1,500 / Delegate
+            </p>
+            <p className="text-sm text-gray-600 mt-1">
+              * This fee covers registration, event participation, and
+              materials.
+            </p>
+          </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <select
-                name="paymentMethod"
-                onChange={handleChange}
-                className="border border-green-300 rounded-lg p-3 w-full focus:ring-2 focus:ring-green-600"
-                required
-              >
-                <option value="">Select Payment Method</option>
-                <option value="JazzCash">JazzCash</option>
-              </select>
+          {/* Payment Form */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <select
+              name="paymentMethod"
+              value={formData.paymentMethod || ""}
+              onChange={handleChange}
+              required
+              className="border border-green-300 rounded-lg p-3 w-full"
+            >
+              <option value="">Select Payment Method</option>
+              <option value="JazzCash">JazzCash</option>
+              <option value="EasyPaisa">EasyPaisa</option>
+            </select>
 
-              <input
-                type="text"
-                name="cardHolder"
-                placeholder="Sender Name (Registered with JazzCash)"
-                onChange={handleChange}
-                className="border border-green-300 rounded-lg p-3 w-full focus:ring-2 focus:ring-green-600"
-                required
-              />
+            <input
+              type="text"
+              name="senderName"
+              placeholder="Sender Name"
+              value={formData.senderName || ""}
+              onChange={handleChange}
+              required
+              className="border border-green-300 rounded-lg p-3 w-full"
+            />
 
-              <input
-                type="text"
-                name="transactionId"
-                placeholder="Transaction ID (TID)"
-                onChange={handleChange}
-                className="border border-green-300 rounded-lg p-3 w-full focus:ring-2 focus:ring-green-600"
-                required
-              />
+            <input
+              type="text"
+              name="transactionId"
+              placeholder="Transaction ID (TID)"
+              value={formData.transactionId || ""}
+              onChange={handleChange}
+              required
+              className="border border-green-300 rounded-lg p-3 w-full"
+            />
 
-              <input
-                type="url"
-                name="paymentProofLink"
-                placeholder="Paste payment screenshot link (Drive, Dropbox, Imgur)"
-                onChange={handleChange}
-                className="border border-green-300 rounded-lg p-3 w-full focus:ring-2 focus:ring-green-600"
-                required
-              />
-            </div>
+            <input
+              type="url"
+              name="paymentProof"
+              placeholder="Paste payment screenshot link"
+              value={formData.paymentProof || ""}
+              onChange={handleChange}
+              required
+              className="border border-green-300 rounded-lg p-3 w-full"
+            />
           </div>
 
           {/* Submit Button */}
-          <div className="text-center">
+          <div className="md:col-span-2 text-center mt-6">
             <button
               type="submit"
-              className="bg-green-700 hover:bg-green-800 text-[#fdf6d9] font-semibold px-8 py-3 rounded-lg shadow-md transition duration-300"
+              disabled={loading}
+              className="bg-green-700 hover:bg-green-800 text-white font-semibold px-10 py-3 rounded-lg shadow-lg transition duration-300"
             >
-              ✨ Submit Registration
+              {loading ? "Submitting..." : "🚀 Submit Registration"}
             </button>
           </div>
+
+          {/* ✅ Success Message */}
+          {success && (
+            <p className="text-green-700 text-center mt-4">
+              ✅ Registration submitted successfully!
+            </p>
+          )}
         </form>
       </div>
     </div>

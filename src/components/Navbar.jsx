@@ -1,27 +1,42 @@
-
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { HiMenu, HiX, HiChevronDown } from "react-icons/hi";
 import { motion as Motion, AnimatePresence } from "framer-motion";
 
-
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
+  const [showNavbar, setShowNavbar] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
-  // On mobile open Register dropdown by default
+  // On mobile, open Register dropdown by default
   useEffect(() => {
     if (window.innerWidth < 768) {
       setIsRegisterOpen(true);
     }
   }, []);
 
+  // Hide navbar on scroll down, show on scroll up
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > lastScrollY) {
+        setShowNavbar(false); // scrolling down
+      } else {
+        setShowNavbar(true); // scrolling up
+      }
+      setLastScrollY(window.scrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [lastScrollY]);
+
   const menuItem = {
     hidden: { opacity: 0, y: -20 },
     visible: (i) => ({
-      opacity: 2,
+      opacity: 1, // ✅ fixed (was 2)
       y: 0,
       transition: { delay: i * 0.1, duration: 0.5, ease: "easeOut" },
     }),
@@ -42,11 +57,12 @@ const Navbar = () => {
   ];
 
   return (
-    <nav
-      className="text-[#fdf6d9] shadow-lg text-center fixed w-full z-50 bg-cover bg-center"
-      style={{
-        backgroundImage: "url('/navbar-bg2.jpeg')",
-      }}
+    <Motion.nav
+      initial={{ y: 0, opacity: 1 }}
+      animate={showNavbar ? { y: 0, opacity: 1 } : { y: -120, opacity: 0 }}
+      transition={{ duration: 0.5, ease: "easeInOut" }}
+      className="text-[#fdf6d9] shadow-lg text-center fixed w-full md:top-[60px] top-[85px] z-40 bg-cover bg-center"
+      style={{ backgroundImage: "url('/navbar-bg2.jpeg')" }}
     >
       <div className="max-w-6xl mx-auto px-6 py-3 flex justify-between items-center relative z-50">
         {/* Logo */}
@@ -151,9 +167,7 @@ const Navbar = () => {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.4 }}
               className="absolute top-full left-0 right-0 md:hidden px-6 pb-6 pt-4 space-y-4 text-lg font-semibold text-[#f2eab8] bg-cover bg-center shadow-lg z-50"
-              style={{
-                backgroundImage: "url('/navbar-bg2.jpeg')",
-              }}
+              style={{ backgroundImage: "url('/navbar-bg2.jpeg')" }}
             >
               {navItems.map((item, i) =>
                 item.dropdown ? (
@@ -215,210 +229,8 @@ const Navbar = () => {
           </>
         )}
       </AnimatePresence>
-    </nav>
+    </Motion.nav>
   );
 };
 
 export default Navbar;
-
-// --------------------------------------------------------------------------------------------
-
-// import React, { useState } from "react";
-// import { Link } from "react-router-dom";
-// import { HiMenu, HiX } from "react-icons/hi";
-
-// const Navbar = () => {
-//   const [isOpen, setIsOpen] = useState(false);
-
-//   const toggleMenu = () => setIsOpen(!isOpen);
-
-//   return (
-//     <nav
-//       className="text-[#fdf6d9] shadow-lg text-center fixed w-full z-50 bg-cover bg-center"
-//       style={{
-//         backgroundImage: "url('/navbar-bg2.jpeg')", // <-- use your image here
-//       }}
-//     >
-//       <div className="max-w-6xl mx-auto px-6 py-3 flex justify-between items-center">
-//         {/* Logo + Title */}
-//         <Link to="/" className="flex items-center gap-3 group">
-//           <img
-//             src="/logo 2.jpeg"
-//             alt="MUN Logo"
-//             className="h-14 w-14 rounded-full shadow-lg cursor-pointer transform transition-transform duration-300 group-hover:scale-110 group-hover:rotate-6"
-//           />
-//           <span className="hidden md:inline-block text-xl font-bold tracking-wide text-[#e6d79f] opacity-0 group-hover:opacity-100 group-hover:translate-x-2 transform transition-all duration-500">
-//             GENESIS MUN
-//           </span>
-//         </Link>
-
-//         {/* Desktop Menu */}
-//         <ul className="hidden md:flex gap-10 text-lg font-semibold">
-//           {["Home", "About", "Register", "Help"].map((item, i) => {
-//             const path = item === "Home" ? "/" : `/${item.toLowerCase()}`;
-//             return (
-//               <li key={i} className="relative group">
-//                 <Link
-//                   to={path}
-//                   className="transition duration-300 hover:text-[#e6d79f]"
-//                 >
-//                   {item}
-//                 </Link>
-//                 <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-[#cebf88] rounded-full group-hover:w-full transition-all duration-300"></span>
-//               </li>
-//             );
-//           })}
-//         </ul>
-
-//         {/* Hamburger Icon (Mobile) */}
-//         <div className="md:hidden">
-//           <button
-//             onClick={toggleMenu}
-//             aria-label="Toggle menu"
-//             className="text--[#c9b982] hover:scale-110 transition"
-//           >
-//             {isOpen ? <HiX size={32} /> : <HiMenu size={32} />}
-//           </button>
-//         </div>
-//       </div>
-
-//       {/* ✅ Mobile Menu Dropdown with same background */}
-//       {isOpen && (
-//         <ul
-//           className="md:hidden px-6 pb-4 space-y-4 text-lg font-semibold text-[#fdf6d9] bg-cover bg-center"
-//           style={{
-//             backgroundImage: "url('/navbar-bg2.jpeg')", // ✅ same image as navbar
-//           }}
-//         >
-//           {["Home", "About", "Register", "Help"].map((item, i) => {
-//             const path = item === "Home" ? "/" : `/${item.toLowerCase()}`;
-//             return (
-//               <li key={i}>
-//                 <Link
-//                   to={path}
-//                   className="block hover:text-[#e5d395] transition"
-//                   onClick={toggleMenu}
-//                 >
-//                   {item}
-//                 </Link>
-//               </li>
-//             );
-//           })}
-//         </ul>
-//       )}
-//     </nav>
-//   );
-// };
-
-// export default Navbar;
-// ------------------------------------------------------------------------------------
-// import React, { useState } from "react";
-// import { Link } from "react-router-dom";
-// import { HiMenu, HiX } from "react-icons/hi";
-
-// const Navbar = () => {
-//   const [isOpen, setIsOpen] = useState(false);
-
-//   const toggleMenu = () => setIsOpen(!isOpen);
-
-//   return (
-//     <nav className="bg-[#fdf6d9] text-green-950 text-center shadow-md fixed w-full z-50">
-//       <div className="max-w-6xl mx-auto px-6 py-3 flex justify-between items-center">
-//         {/* Logo + Animated Title */}
-//         <Link to="/" className="flex items-center gap-3 group">
-//           <img
-//             src="/logo.png"
-//             alt="MUN Logo"
-//             className="h-14 w-14 rounded-full shadow-lg cursor-pointer transform transition-transform duration-300 group-hover:scale-110"
-//           />
-//           {/* Show name only on desktop, slide-in on hover */}
-//           <span className="hidden md:inline-block text-xl font-bold tracking-wide opacity-0 group-hover:opacity-100 group-hover:translate-x-2 transform transition-all duration-500">
-//             GENESIS MUN
-//           </span>
-//         </Link>
-
-//         {/* Desktop Menu */}
-//         <ul className="hidden md:flex gap-10 text-lg font-bold">
-//           <li>
-//             <Link to="/" className="relative group transition duration-300">
-//               Home
-//               <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-green-700 group-hover:w-full transition-all duration-300"></span>
-//             </Link>
-//           </li>
-//           <li>
-//             <Link
-//               to="/about"
-//               className="relative group transition duration-300"
-//             >
-//               About
-//               <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-green-700 group-hover:w-full transition-all duration-300"></span>
-//             </Link>
-//           </li>
-//           <li>
-//             <Link to="/form" className="relative group transition duration-300">
-//               Register
-//               <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-green-700 group-hover:w-full transition-all duration-300"></span>
-//             </Link>
-//           </li>
-//           <li>
-//             <Link to="/help" className="relative group transition duration-300">
-//               Help
-//               <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-green-700 group-hover:w-full transition-all duration-300"></span>
-//             </Link>
-//           </li>
-//         </ul>
-
-//         {/* Hamburger Icon (Mobile) */}
-//         <div className="md:hidden">
-//           <button onClick={toggleMenu} aria-label="Toggle menu">
-//             {isOpen ? <HiX size={32} /> : <HiMenu size={32} />}
-//           </button>
-//         </div>
-//       </div>
-
-//       {/* Mobile Menu Dropdown */}
-//       {isOpen && (
-//         <ul className="md:hidden bg-[#fdf6d9] px-6 pb-4 space-y-4 text-lg font-semibold text-green-950">
-//           <li>
-//             <Link
-//               to="/"
-//               className="block hover:text-green-700 transition"
-//               onClick={toggleMenu}
-//             >
-//               Home
-//             </Link>
-//           </li>
-//           <li>
-//             <Link
-//               to="/about"
-//               className="block hover:text-green-700 transition"
-//               onClick={toggleMenu}
-//             >
-//               About
-//             </Link>
-//           </li>
-//           <li>
-//             <Link
-//               to="/form"
-//               className="block hover:text-green-700 transition"
-//               onClick={toggleMenu}
-//             >
-//               Register
-//             </Link>
-//           </li>
-//           <li>
-//             <Link
-//               to="/help"
-//               className="block hover:text-green-700 transition"
-//               onClick={toggleMenu}
-//             >
-//               Help
-//             </Link>
-//           </li>
-//         </ul>
-//       )}
-//     </nav>
-//   );
-// };
-
-// export default Navbar;

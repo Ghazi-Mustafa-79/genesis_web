@@ -7,17 +7,17 @@ const Footer = () => {
   const socialLinks = [
     {
       icon: <FaInstagram />,
-      href: "https://instagram.com",
+      href: "https://www.instagram.com/_genesis.mun?igsh=dzQ4bzRjeHE5Ynlk",
       label: "Instagram",
     },
     {
       icon: <FaWhatsapp />,
-      href: "https://wa.me/923001234567", // ✅ Replace with your number
+      href: "https://wa.me/923709963350", // ✅ Replace with your number
       label: "WhatsApp",
     },
     {
       icon: <FaEnvelope />,
-      href: "mailto:support@genesismun.com", // ✅ Replace with your email
+      href: "mailto:genesismun001@gmail.com", // ✅ Replace with your email
       label: "Email Support",
     },
     {

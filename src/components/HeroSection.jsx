@@ -4,7 +4,7 @@ import { motion as Motion } from "framer-motion";
 
 const HeroSection = () => {
   return (
-    <section className="relative min-h-screen flex flex-col justify-center items-center text-center px-6 overflow-hidden bg-gradient-to-b from-[#f2eab8]500 via-[#f2eab8]-700 to-[#f0ebc6]">
+    <section className="relative min-h-screen flex flex-col justify-center md:mt-[60px] mt-[80px] items-center text-center px-6 overflow-hidden bg-gradient-to-b from-[#f2eab8]500 via-[#f2eab8]-700 to-[#f0ebc6]">
       {/* Logo faded in background */}
       <div className="absolute inset-0 flex items-center justify-center">
         <img
@@ -17,7 +17,7 @@ const HeroSection = () => {
         <div className="absolute inset-0 bg-gradient-to-t from-green-100/10 via-green-50/2 to-green-200/5"></div>
       </div>
 
-      <div className="relative max-w-4xl z-10 pt-20 md:pt-48 lg:pt-10">
+      <div className="relative max-w-4xl z-10 pt-38 md:pt-48 lg:pt-10">
         {/* Heading Animation */}
         <Motion.h1
           initial={{ opacity: 0, y: -50 }}
@@ -48,7 +48,7 @@ const HeroSection = () => {
           className="mt-8"
         >
           <Link
-            to="/Register"
+            to="/HomeLinks"
             className="px-8 py-3 text-white font-semibold rounded-xl shadow-lg hover:bg-green-800 hover:scale-105 transition transform duration-300"
             style={{
               backgroundImage: "url('/navbar-bg2.jpeg')", // button texture

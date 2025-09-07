@@ -34,7 +34,7 @@ const Help = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#f2eab8] pt-24 pb-16 px-6 md:px-20">
+    <div className="min-h-screen bg-[#f2eab8] pt-24 pb-16 px-6 md:mt-[40px] mt-[60px] md:px-20">
       {/* Hero Section */}
       <Motion.div
         initial={{ opacity: 0, y: -50 }}
@@ -107,7 +107,7 @@ const Help = () => {
             Write to us anytime and we’ll get back quickly.
           </p>
           <div className="flex items-center gap-2 text-lg">
-            <FaEnvelope /> support@genesismun.org
+            <FaEnvelope /> genesismun001@gmail.com
           </div>
         </Motion.div>
 
@@ -118,7 +118,7 @@ const Help = () => {
           <h2 className="text-2xl font-bold mb-3">📞 Call Us</h2>
           <p className="mb-2">Available from 9 AM - 6 PM daily.</p>
           <div className="flex items-center gap-2 text-lg font-semibold">
-            <FaPhoneAlt /> +92 300 1234567
+            <FaPhoneAlt /> +92 370 9963350
           </div>
         </Motion.div>
       </Motion.div>

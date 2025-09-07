@@ -60,7 +60,7 @@ const LogisticsForm = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#f2eab8] flex items-center justify-center p-6">
+    <div className="min-h-screen bg-[#f2eab8] flex items-center justify-center md:mt-[60px] mt-[80px] p-6">
       <div className="w-full max-w-3xl bg-white/90 backdrop-blur-md border border-green-200 shadow-2xl rounded-2xl p-8">
         <h2 className="text-3xl font-bold text-center text-green-900 mb-6">
           🛡️ Security & Logistics Team Application

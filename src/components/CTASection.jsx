@@ -43,7 +43,7 @@ const CTASection = () => {
           className="mt-8 flex justify-center"
         >
           <a
-            href="/register"
+            href="/MunRegisterForm"
             className="px-8 py-4 bg-green-700 text-white font-semibold rounded-full shadow-md hover:bg-green-800 hover:shadow-lg transition"
           >
             Register Now

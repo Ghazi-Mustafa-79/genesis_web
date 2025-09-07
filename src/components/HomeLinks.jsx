@@ -19,40 +19,40 @@ const HomeLinks = () => {
       label: "Context of Genesis",
       icon: <ScrollText />,
       type: "file",
-      url: "#",
-    },
-    { label: "Allotments", icon: <ClipboardList />, type: "file", url: "#" },
-    { label: "Study Guides", icon: <BookOpen />, type: "file", url: "#" },
-    { label: "Equity Policy", icon: <FileCheck />, type: "file", url: "#" },
-    {
-      label: "Logistics & Security Team Application",
-      icon: <ShieldCheck />,
-      type: "internal",
-      url: "/LogisticsForm",
+      url: "https://drive.google.com/file/d/1at0TaJ0XwKGPvaV-WaErMtsvAinTlLTG/view?usp=sharing",
     },
     {
       label: "Code Of Conduct",
       icon: <FileText />,
       type: "file",
-      url: "#",
-    },
-    {
-      label: "Delegation Registration Form",
-      icon: <Users2 />,
-      type: "internal",
-      url: "/MunRegisterForm",
+      url: "https://drive.google.com/file/d/13EfPRUXInMKCcW3TEhmozjNvufBW5pyD/view?usp=sharing",
     },
     {
       label: "Private Delegate Registration Form",
       icon: <UserPlus />,
       type: "internal",
-      url: "/PrivateRegistration",
+      url: "/MunRegisterForm",
     },
+    {
+      label: "Equity Policy",
+      icon: <FileCheck />,
+      type: "file",
+      url: "https://drive.google.com/file/d/1Jg17EnKaqsAGLzt0UHaTdGs0J4F4fh9f/view?usp=sharing",
+    },
+
+    { label: "Allotments", icon: <ClipboardList />, type: "file", url: "#" },
     {
       label: "CD & ACD Application Form",
       icon: <Users />,
       type: "internal",
       url: "/ChairACDForm",
+    },
+
+    {
+      label: "Logistics & Security Team Application",
+      icon: <ShieldCheck />,
+      type: "internal",
+      url: "/LogisticsForm",
     },
   ];
 
