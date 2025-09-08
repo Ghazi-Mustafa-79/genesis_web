@@ -305,15 +305,55 @@ const MUNRegistrationForm = () => {
               className="border border-green-300 rounded-lg p-3 w-full"
             />
 
-            {/* <input
+            <input
               type="url"
               name="paymentProof"
-              placeholder="Paste payment screenshot link"
+              placeholder="Paste payment screenshot link (Google Drive / Photos)"
               value={formData.paymentProof || ""}
               onChange={handleChange}
               required
               className="border border-green-300 rounded-lg p-3 w-full"
-            /> */}
+            />
+
+            {/* Payment Proof */}
+            <div className="md:col-span-2">
+              <label className="block text-green-800 font-semibold mb-2">
+                Upload Payment Proof
+              </label>
+              <input
+                type="url"
+                name="paymentProof"
+                placeholder="Paste Google Photos / Drive link of your screenshot"
+                value={formData.paymentProof || ""}
+                onChange={handleChange}
+                required
+                className="border border-green-300 rounded-lg p-3 w-full"
+              />
+
+              {/* Helper links */}
+              <div className="mt-2 text-center">
+                <a
+                  href="https://photos.google.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 underline hover:text-blue-800 mr-4"
+                >
+                  📸 Open Google Photos
+                </a>
+                <a
+                  href="https://drive.google.com/drive/my-drive"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 underline hover:text-blue-800"
+                >
+                  📂 Open Google Drive
+                </a>
+                <p className="text-sm text-gray-600 mt-1">
+                  Upload your screenshot, copy the shareable link, and paste it
+                  above.
+                </p>
+              </div>
+            </div>
           </div>
           {/* Submit Button */}
           <div className="md:col-span-2 text-center mt-6">
