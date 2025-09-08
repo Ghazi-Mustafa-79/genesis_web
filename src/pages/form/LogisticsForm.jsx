@@ -181,14 +181,6 @@ const LogisticsForm = () => {
               MUN Details
             </h3>
             <div className="space-y-3">
-              <input
-                type="number"
-                name="delegates"
-                placeholder="Number of Delegates You Will Bring (if any)"
-                value={formData.delegates}
-                onChange={handleChange}
-                className="border border-green-300 rounded-lg p-3 w-full focus:ring-2 focus:ring-green-600"
-              />
               <textarea
                 name="munExperience"
                 placeholder="Previous MUN Experience (if any)"
