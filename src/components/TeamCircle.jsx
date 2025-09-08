@@ -7,10 +7,11 @@ const people = [
     image: "/uzair.jpeg",
     role: "Provides overall leadership, vision, and direction for the conference.",
   },
+
   {
-    name: "Secretary General",
-    image: "/ahmed.jpg",
-    role: "Oversees execution and ensures smooth coordination across all departments.",
+    name: "Director General",
+    image: "/sallu.png",
+    role: "Manages logistics and operations for a seamless delegate experience.",
   },
   {
     name: "USG Committees",
@@ -18,9 +19,9 @@ const people = [
     role: "Leads committees and supports chairs in maintaining quality debate.",
   },
   {
-    name: "Director General",
-    image: "/sallu.png",
-    role: "Manages logistics and operations for a seamless delegate experience.",
+    name: "Secretary General",
+    image: "/ahmed.jpg",
+    role: "Oversees execution and ensures smooth coordination across all departments.",
   },
 ];
 
@@ -95,5 +96,3 @@ const TeamCircle = () => {
 };
 
 export default TeamCircle;
-
-
