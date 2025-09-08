@@ -4,7 +4,7 @@ import { motion as Motion } from "framer-motion";
 const people = [
   {
     name: "President",
-    image: "/uzair.jpg",
+    image: "/uzair.jpeg",
     role: "Provides overall leadership, vision, and direction for the conference.",
   },
   {
@@ -95,3 +95,5 @@ const TeamCircle = () => {
 };
 
 export default TeamCircle;
+
+
