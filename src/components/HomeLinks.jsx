@@ -41,19 +41,19 @@ const HomeLinks = () => {
     },
 
     { label: "Allotments", icon: <ClipboardList />, type: "file", url: "#" },
-    {
-      label: "CD & ACD Application Form",
-      icon: <Users />,
-      type: "internal",
-      url: "/ChairACDForm",
-    },
+    // {
+    //   label: "CD & ACD Application Form",
+    //   icon: <Users />,
+    //   type: "internal",
+    //   url: "/ChairACDForm",
+    // },
 
-    {
-      label: "Logistics & Security Team Application",
-      icon: <ShieldCheck />,
-      type: "internal",
-      url: "/LogisticsForm",
-    },
+    // {
+    //   label: "Logistics & Security Team Application",
+    //   icon: <ShieldCheck />,
+    //   type: "internal",
+    //   url: "/LogisticsForm",
+    // },
   ];
 
   return (

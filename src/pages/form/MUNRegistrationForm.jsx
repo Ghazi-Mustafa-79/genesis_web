@@ -9,7 +9,7 @@ const MUNRegistrationForm = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
@@ -20,13 +20,14 @@ const MUNRegistrationForm = () => {
     try {
       await addDoc(collection(db, "students"), {
         ...formData,
-        amount: 2000, // fixed registration fee
+        amount: 4500, // updated fee to match UI
         status: "Pending", // admin will verify payment
         createdAt: Timestamp.now(),
       });
 
       setSuccess(true);
       setFormData({});
+      e.target.reset(); // clears form fields in UI
     } catch (error) {
       console.error("❌ Error saving form:", error);
       alert("❌ Error submitting form. Please try again.");
@@ -112,6 +113,7 @@ const MUNRegistrationForm = () => {
               />
             </div>
           </div>
+
           {/* Academic Information */}
           <div>
             <h3 className="text-xl font-semibold text-green-800 mb-3">
@@ -143,6 +145,7 @@ const MUNRegistrationForm = () => {
               />
             </div>
           </div>
+
           {/* MUN Experience */}
           <div>
             <h3 className="text-xl font-semibold text-green-800 mb-3">
@@ -179,6 +182,7 @@ const MUNRegistrationForm = () => {
               </select>
             </div>
           </div>
+
           {/* Committee & Country Preferences */}
           <div>
             <h3 className="text-xl font-semibold text-green-800 mb-3">
@@ -217,10 +221,12 @@ const MUNRegistrationForm = () => {
               />
             </div>
           </div>
+
           {/* Payment Information */}
           <h2 className="text-2xl md:text-3xl font-extrabold text-green-800 mb-8 text-center">
             💳 Payment Information
           </h2>
+
           {/* Registration Fee */}
           <div className="bg-yellow-50 border border-yellow-300 rounded-lg p-5 mb-8 text-center">
             <p className="text-lg font-semibold text-yellow-900">
@@ -234,6 +240,7 @@ const MUNRegistrationForm = () => {
               materials.
             </p>
           </div>
+
           {/* Payment Form */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <select
@@ -249,35 +256,32 @@ const MUNRegistrationForm = () => {
               <option value="EasyPaisa">EasyPaisa</option>
             </select>
 
-            {/* Show Payment Number based on selected method */}
+            {/* Show Payment Number */}
             {formData.paymentMethod && (
               <div className="md:col-span-2 bg-green-50 border border-green-300 rounded-lg p-3 text-center">
                 {formData.paymentMethod === "JazzCash" && (
                   <p>
-                    Send payment to
+                    Send payment to{" "}
                     <strong>
-                      {" "}
-                      Salman Saeed: <b> 03097506051</b>
+                      Salman Saeed: <b>03097506051</b>
                     </strong>{" "}
                     (JazzCash)
                   </p>
                 )}
                 {formData.paymentMethod === "SadaPay" && (
                   <p>
-                    Send payment to
+                    Send payment to{" "}
                     <strong>
-                      {" "}
-                      Salman Saeed Ahmed: <b> 03097506051</b>
+                      Salman Saeed Ahmed: <b>03097506051</b>
                     </strong>{" "}
                     (SadaPay)
                   </p>
                 )}
                 {formData.paymentMethod === "EasyPaisa" && (
                   <p>
-                    Send payment to
+                    Send payment to{" "}
                     <strong>
-                      {" "}
-                      Salman Saeed Ahmed: <b> 03709963350</b>
+                      Salman Saeed Ahmed: <b>03709963350</b>
                     </strong>{" "}
                     (EasyPaisa)
                   </p>
@@ -304,11 +308,10 @@ const MUNRegistrationForm = () => {
               required
               className="border border-green-300 rounded-lg p-3 w-full"
             />
-
             <input
               type="url"
               name="paymentProof"
-              placeholder="Paste payment screenshot link (Google Drive / Photos)"
+              placeholder="Paste Google Photos / Drive link of your screenshot"
               value={formData.paymentProof || ""}
               onChange={handleChange}
               required
@@ -317,44 +320,48 @@ const MUNRegistrationForm = () => {
 
             {/* Payment Proof */}
             <div className="md:col-span-2">
-              <label className="block text-green-800 font-semibold mb-2">
-                Upload Payment Proof
-              </label>
-              <input
-                type="url"
-                name="paymentProof"
-                placeholder="Paste Google Photos / Drive link of your screenshot"
-                value={formData.paymentProof || ""}
-                onChange={handleChange}
-                required
-                className="border border-green-300 rounded-lg p-3 w-full"
-              />
-
-              {/* Helper links */}
-              <div className="mt-2 text-center">
-                <a
-                  href="https://photos.google.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-600 underline hover:text-blue-800 mr-4"
-                >
-                  📸 Open Google Photos
-                </a>
-                <a
-                  href="https://drive.google.com/drive/my-drive"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-600 underline hover:text-blue-800"
-                >
-                  📂 Open Google Drive
-                </a>
-                <p className="text-sm text-gray-600 mt-1">
-                  Upload your screenshot, copy the shareable link, and paste it
-                  above.
+              {/* Step-by-step guide */}
+              <div className="mt-3 p-3 bg-blue-50 border border-blue-300 rounded-lg text-sm text-gray-700">
+                <p className="font-semibold text-blue-800 mb-1">
+                  📌 How to upload your screenshot:
                 </p>
+                <ol className="list-decimal list-inside space-y-1">
+                  <li>
+                    Open{" "}
+                    <a
+                      href="https://photos.google.com/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-600 underline hover:text-blue-800"
+                    >
+                      Google Photos
+                    </a>{" "}
+                    or{" "}
+                    <a
+                      href="https://drive.google.com/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-600 underline hover:text-blue-800"
+                    >
+                      Google Drive
+                    </a>
+                    .
+                  </li>
+                  <li>Upload your payment screenshot there.</li>
+                  <li>
+                    Right-click the image → select <b>“Get Link”</b> or{" "}
+                    <b>“Copy Link”</b>.
+                  </li>
+                  <li>
+                    Make sure link sharing is set to{" "}
+                    <b>“Anyone with the link”</b>.
+                  </li>
+                  <li>Paste the copied link into the field above ✅</li>
+                </ol>
               </div>
             </div>
           </div>
+
           {/* Submit Button */}
           <div className="md:col-span-2 text-center mt-6">
             <button
@@ -365,6 +372,7 @@ const MUNRegistrationForm = () => {
               {loading ? "Submitting..." : "🚀 Submit Registration"}
             </button>
           </div>
+
           {/* ✅ Success Message */}
           {success && (
             <p className="text-green-700 text-center mt-4">
@@ -378,3 +386,384 @@ const MUNRegistrationForm = () => {
 };
 
 export default MUNRegistrationForm;
+
+// import React, { useState } from "react";
+// import { db } from "../../firebase/firebase.js";
+// import { collection, addDoc, Timestamp } from "firebase/firestore";
+
+// const MUNRegistrationForm = () => { */}
+//   const [formData, setFormData] = useState({});
+//   const [loading, setLoading] = useState(false);
+//   const [success, setSuccess] = useState(false);
+
+//   const handleChange = (e) => {
+//     const { name, value } = e.target;
+//     setFormData({ ...formData, [name]: value });
+//   };
+
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+//     setLoading(true);
+//     setSuccess(false);
+
+//     try {
+//       await addDoc(collection(db, "students"), {
+//         ...formData,
+//         amount: 2000, // fixed registration fee
+//         status: "Pending", // admin will verify payment
+//         createdAt: Timestamp.now(),
+//       });
+
+//       setSuccess(true);
+//       setFormData({});
+//     } catch (error) {
+//       console.error("❌ Error saving form:", error);
+//       alert("❌ Error submitting form. Please try again.");
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   return (
+//     <div className="min-h-screen bg-[#f2eab8] flex items-center justify-center md:mt-[60px] mt-[80px] p-6">
+//       <div className="w-full max-w-3xl bg-white/90 backdrop-blur-md border border-green-200 shadow-2xl rounded-2xl p-8">
+//         <h2 className="text-3xl font-bold text-center text-green-900 mb-6">
+//           🏛️ Private Delegate Registration Form
+//         </h2>
+
+//         <form className="space-y-6" onSubmit={handleSubmit}>
+//           {/* Personal Information */}
+//           <div>
+//             <h3 className="text-xl font-semibold text-green-800 mb-3">
+//               Personal Information
+//             </h3>
+//             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+//               <input
+//                 type="text"
+//                 name="fullName"
+//                 placeholder="Full Name"
+//                 onChange={handleChange}
+//                 required
+//                 className="border border-green-300 rounded-lg p-3 w-full"
+//               />
+//               <input
+//                 type="text"
+//                 name="dob"
+//                 placeholder="MM/DD/YYYY"
+//                 onFocus={(e) => (e.target.type = "date")}
+//                 onBlur={(e) => (e.target.type = "text")}
+//                 onChange={handleChange}
+//                 required
+//                 className="border border-green-300 rounded-lg p-3 w-full"
+//               />
+//               <select
+//                 name="gender"
+//                 onChange={handleChange}
+//                 required
+//                 className="border border-green-300 rounded-lg p-3 w-full"
+//               >
+//                 <option value="">Select Gender</option>
+//                 <option value="Male">Male</option>
+//                 <option value="Female">Female</option>
+//               </select>
+//               <input
+//                 type="text"
+//                 name="nationality"
+//                 placeholder="Nationality"
+//                 onChange={handleChange}
+//                 required
+//                 className="border border-green-300 rounded-lg p-3 w-full"
+//               />
+//               <input
+//                 type="tel"
+//                 name="contactNumber"
+//                 placeholder="Contact Number"
+//                 onChange={handleChange}
+//                 required
+//                 className="border border-green-300 rounded-lg p-3 w-full"
+//               />
+//               <input
+//                 type="email"
+//                 name="email"
+//                 placeholder="Email Address"
+//                 value={formData.email || ""}
+//                 onChange={handleChange}
+//                 required
+//                 className="border border-green-300 rounded-lg p-3 w-full"
+//               />
+//               <input
+//                 type="tel"
+//                 name="whatsapp"
+//                 placeholder="WhatsApp Number"
+//                 onChange={handleChange}
+//                 required
+//                 className="border border-green-300 rounded-lg p-3 w-full"
+//               />
+//             </div>
+//           </div>
+//           {/* Academic Information */}
+//           <div>
+//             <h3 className="text-xl font-semibold text-green-800 mb-3">
+//               Academic Information
+//             </h3>
+//             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+//               <input
+//                 type="text"
+//                 name="institution"
+//                 placeholder="Institution / School / College"
+//                 onChange={handleChange}
+//                 required
+//                 className="border border-green-300 rounded-lg p-3 w-full"
+//               />
+//               <input
+//                 type="text"
+//                 name="grade"
+//                 placeholder="Grade / Year"
+//                 onChange={handleChange}
+//                 required
+//                 className="border border-green-300 rounded-lg p-3 w-full"
+//               />
+//               <input
+//                 type="text"
+//                 name="fieldOfStudy"
+//                 placeholder="Field of Study (if applicable)"
+//                 onChange={handleChange}
+//                 className="border border-green-300 rounded-lg p-3 w-full"
+//               />
+//             </div>
+//           </div>
+//           {/* MUN Experience */}
+//           <div>
+//             <h3 className="text-xl font-semibold text-green-800 mb-3">
+//               MUN Experience
+//             </h3>
+//             <div className="space-y-3">
+//               <select
+//                 name="attendedBefore"
+//                 onChange={handleChange}
+//                 required
+//                 className="border border-green-300 rounded-lg p-3 w-full"
+//               >
+//                 <option value="">Have you attended any MUNs before?</option>
+//                 <option value="Yes">Yes</option>
+//                 <option value="No">No</option>
+//               </select>
+//               <input
+//                 type="text"
+//                 name="previousMUNs"
+//                 placeholder="If yes, list previous MUNs"
+//                 onChange={handleChange}
+//                 className="border border-green-300 rounded-lg p-3 w-full"
+//               />
+//               <select
+//                 name="previousPosition"
+//                 onChange={handleChange}
+//                 className="border border-green-300 rounded-lg p-3 w-full"
+//               >
+//                 <option value="">Previous Position</option>
+//                 <option value="Delegate">Delegate</option>
+//                 <option value="Chair">Chair</option>
+//                 <option value="Director">Director</option>
+//                 <option value="Other">Other</option>
+//               </select>
+//             </div>
+//           </div>
+//           {/* Committee & Country Preferences */}
+//           <div>
+//             <h3 className="text-xl font-semibold text-green-800 mb-3">
+//               Committee & Country Preferences
+//             </h3>
+//             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+//               <input
+//                 type="text"
+//                 name="committee"
+//                 placeholder="Committee Preference"
+//                 onChange={handleChange}
+//                 required
+//                 className="border border-green-300 rounded-lg p-3 w-full"
+//               />
+//               <input
+//                 type="text"
+//                 name="firstCountry"
+//                 placeholder="First Country Preference"
+//                 onChange={handleChange}
+//                 required
+//                 className="border border-green-300 rounded-lg p-3 w-full"
+//               />
+//               <input
+//                 type="text"
+//                 name="secondCountry"
+//                 placeholder="Second Country Preference"
+//                 onChange={handleChange}
+//                 className="border border-green-300 rounded-lg p-3 w-full"
+//               />
+//               <input
+//                 type="text"
+//                 name="thirdCountry"
+//                 placeholder="Third Country Preference"
+//                 onChange={handleChange}
+//                 className="border border-green-300 rounded-lg p-3 w-full"
+//               />
+//             </div>
+//           </div>
+//           {/* Payment Information */}
+//           <h2 className="text-2xl md:text-3xl font-extrabold text-green-800 mb-8 text-center">
+//             💳 Payment Information
+//           </h2>
+//           {/* Registration Fee */}
+//           <div className="bg-yellow-50 border border-yellow-300 rounded-lg p-5 mb-8 text-center">
+//             <p className="text-lg font-semibold text-yellow-900">
+//               Registration Fee:
+//             </p>
+//             <p className="text-2xl font-bold text-green-700">
+//               Rs. 4,500 / Delegate
+//             </p>
+//             <p className="text-sm text-gray-600 mt-1">
+//               * This fee covers registration, event participation, and
+//               materials.
+//             </p>
+//           </div>
+//           {/* Payment Form */}
+//           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+//             <select
+//               name="paymentMethod"
+//               value={formData.paymentMethod || ""}
+//               onChange={handleChange}
+//               required
+//               className="border border-green-300 rounded-lg p-3 w-full"
+//             >
+//               <option value="">Select Payment Method</option>
+//               <option value="JazzCash">JazzCash</option>
+//               <option value="SadaPay">SadaPay</option>
+//               <option value="EasyPaisa">EasyPaisa</option>
+//             </select>
+
+//             {/* Show Payment Number based on selected method */}
+//             {formData.paymentMethod && (
+//               <div className="md:col-span-2 bg-green-50 border border-green-300 rounded-lg p-3 text-center">
+//                 {formData.paymentMethod === "JazzCash" && (
+//                   <p>
+//                     Send payment to
+//                     <strong>
+//                       {" "}
+//                       Salman Saeed: <b> 03097506051</b>
+//                     </strong>{" "}
+//                     (JazzCash)
+//                   </p>
+//                 )}
+//                 {formData.paymentMethod === "SadaPay" && (
+//                   <p>
+//                     Send payment to
+//                     <strong>
+//                       {" "}
+//                       Salman Saeed Ahmed: <b> 03097506051</b>
+//                     </strong>{" "}
+//                     (SadaPay)
+//                   </p>
+//                 )}
+//                 {formData.paymentMethod === "EasyPaisa" && (
+//                   <p>
+//                     Send payment to
+//                     <strong>
+//                       {" "}
+//                       Salman Saeed Ahmed: <b> 03709963350</b>
+//                     </strong>{" "}
+//                     (EasyPaisa)
+//                   </p>
+//                 )}
+//               </div>
+//             )}
+
+//             <input
+//               type="text"
+//               name="senderName"
+//               placeholder="Sender Name"
+//               value={formData.senderName || ""}
+//               onChange={handleChange}
+//               required
+//               className="border border-green-300 rounded-lg p-3 w-full"
+//             />
+
+//             <input
+//               type="text"
+//               name="transactionId"
+//               placeholder="Transaction ID (TID)"
+//               value={formData.transactionId || ""}
+//               onChange={handleChange}
+//               required
+//               className="border border-green-300 rounded-lg p-3 w-full"
+//             />
+
+//             <input
+//               type="url"
+//               name="paymentProof"
+//               placeholder="Paste payment screenshot link (Google Drive / Photos)"
+//               value={formData.paymentProof || ""}
+//               onChange={handleChange}
+//               required
+//               className="border border-green-300 rounded-lg p-3 w-full"
+//             />
+
+//             {/* Payment Proof */}
+//             <div className="md:col-span-2">
+//               <label className="block text-green-800 font-semibold mb-2">
+//                 Upload Payment Proof
+//               </label>
+//               <input
+//                 type="url"
+//                 name="paymentProof"
+//                 placeholder="Paste Google Photos / Drive link of your screenshot"
+//                 value={formData.paymentProof || ""}
+//                 onChange={handleChange}
+//                 required
+//                 className="border border-green-300 rounded-lg p-3 w-full"
+//               />
+
+//               {/* Helper links */}
+//               <div className="mt-2 text-center">
+//                 <a
+//                   href="https://photos.google.com/"
+//                   target="_blank"
+//                   rel="noopener noreferrer"
+//                   className="text-blue-600 underline hover:text-blue-800 mr-4"
+//                 >
+//                   📸 Open Google Photos
+//                 </a>
+//                 <a
+//                   href="https://drive.google.com/drive/my-drive"
+//                   target="_blank"
+//                   rel="noopener noreferrer"
+//                   className="text-blue-600 underline hover:text-blue-800"
+//                 >
+//                   📂 Open Google Drive
+//                 </a>
+//                 <p className="text-sm text-gray-600 mt-1">
+//                   Upload your screenshot, copy the shareable link, and paste it
+//                   above.
+//                 </p>
+//               </div>
+//             </div>
+//           </div>
+//           {/* Submit Button */}
+//           <div className="md:col-span-2 text-center mt-6">
+//             <button
+//               type="submit"
+//               disabled={loading}
+//               className="bg-green-700 hover:bg-green-800 text-white font-semibold px-10 py-3 rounded-lg shadow-lg transition duration-300"
+//             >
+//               {loading ? "Submitting..." : "🚀 Submit Registration"}
+//             </button>
+//           </div>
+//           {/* ✅ Success Message */}
+//           {success && (
+//             <p className="text-green-700 text-center mt-4">
+//               ✅ Registration submitted successfully!
+//             </p>
+//           )}
+//         </form>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default MUNRegistrationForm;

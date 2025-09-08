@@ -48,8 +48,8 @@ const Navbar = () => {
     {
       label: "Register as a?",
       dropdown: [
-        { label: "Logistics Security", path: "/LogisticsForm" },
-        { label: "Chair ACD Form", path: "/chairacdform" },
+        // { label: "Logistics Security", path: "/LogisticsForm" },
+        // { label: "Chair ACD Form", path: "/chairacdform" },
         { label: "Private Registration", path: "/MunRegisterForm" },
       ],
     },
