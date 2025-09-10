@@ -188,15 +188,25 @@ const MUNRegistrationForm = () => {
             <h3 className="text-xl font-semibold text-green-800 mb-3">
               Committee & Country Preferences
             </h3>
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <input
-                type="text"
+              {/* Dropdown */}
+              <select
                 name="committee"
-                placeholder="Committee Preference"
                 onChange={handleChange}
                 required
-                className="border border-green-300 rounded-lg p-3 w-full"
-              />
+                className="border border-green-300 rounded-lg p-3 w-full bg-white text-gray-700"
+              >
+                <option value="" disabled selected>
+                  Select Committee Preference
+                </option>
+                <option value="GEC">GEC</option>
+                <option value="ECOSOC">ECOSOC</option>
+                <option value="UNSC">UNSC</option>
+                <option value="PNA">PNA</option>
+              </select>
+
+              {/* Country Preferences */}
               <input
                 type="text"
                 name="firstCountry"
