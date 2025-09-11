@@ -1,33 +1,50 @@
 import React, { useState } from "react";
 import { db } from "../../firebase/firebase.js";
-import { collection, addDoc, Timestamp } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  doc,
+  setDoc,
+  Timestamp,
+} from "firebase/firestore";
 
 const MUNRegistrationForm = () => {
   const [formData, setFormData] = useState({});
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
+  // ✅ Handle Input Changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  // ✅ Custom Submit Function with Sequential IDs
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setSuccess(false);
 
     try {
-      await addDoc(collection(db, "students"), {
+      // 1️⃣ Get current count of students
+      const studentsRef = collection(db, "students");
+      const snapshot = await getDocs(studentsRef);
+      const count = snapshot.size;
+
+      // 2️⃣ Generate a new custom ID
+      const newId = `student_${count + 1}`;
+
+      // 3️⃣ Save data with custom ID
+      await setDoc(doc(studentsRef, newId), {
         ...formData,
-        amount: 4500, // updated fee to match UI
-        status: "Pending", // admin will verify payment
+        amount: 4500, // Registration fee
+        status: "Pending", // Admin will verify payment
         createdAt: Timestamp.now(),
       });
 
       setSuccess(true);
       setFormData({});
-      e.target.reset(); // clears form fields in UI
+      e.target.reset(); // clear form UI
     } catch (error) {
       console.error("❌ Error saving form:", error);
       alert("❌ Error submitting form. Please try again.");
@@ -190,23 +207,19 @@ const MUNRegistrationForm = () => {
             </h3>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* Dropdown */}
               <select
                 name="committee"
                 onChange={handleChange}
                 required
                 className="border border-green-300 rounded-lg p-3 w-full bg-white text-gray-700"
               >
-                <option value="" disabled selected>
-                  Select Committee Preference
-                </option>
+                <option value="">Select Committee Preference</option>
                 <option value="GEC">GEC</option>
                 <option value="ECOSOC">ECOSOC</option>
                 <option value="UNSC">UNSC</option>
                 <option value="PNA">PNA</option>
               </select>
 
-              {/* Country Preferences */}
               <input
                 type="text"
                 name="firstCountry"
@@ -237,7 +250,6 @@ const MUNRegistrationForm = () => {
             💳 Payment Information
           </h2>
 
-          {/* Registration Fee */}
           <div className="bg-yellow-50 border border-yellow-300 rounded-lg p-5 mb-8 text-center">
             <p className="text-lg font-semibold text-yellow-900">
               Registration Fee:
@@ -251,7 +263,6 @@ const MUNRegistrationForm = () => {
             </p>
           </div>
 
-          {/* Payment Form */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <select
               name="paymentMethod"
@@ -266,34 +277,24 @@ const MUNRegistrationForm = () => {
               <option value="EasyPaisa">EasyPaisa</option>
             </select>
 
-            {/* Show Payment Number */}
             {formData.paymentMethod && (
               <div className="md:col-span-2 bg-green-50 border border-green-300 rounded-lg p-3 text-center">
                 {formData.paymentMethod === "JazzCash" && (
                   <p>
-                    Send payment to{" "}
-                    <strong>
-                      Salman Saeed: <b>03097506051</b>
-                    </strong>{" "}
+                    Send payment to <strong>Salman Saeed: 03097506051</strong>{" "}
                     (JazzCash)
                   </p>
                 )}
                 {formData.paymentMethod === "SadaPay" && (
                   <p>
                     Send payment to{" "}
-                    <strong>
-                      Salman Saeed Ahmed: <b>03097506051</b>
-                    </strong>{" "}
-                    (SadaPay)
+                    <strong>Salman Saeed Ahmed: 03097506051</strong> (SadaPay)
                   </p>
                 )}
                 {formData.paymentMethod === "EasyPaisa" && (
                   <p>
                     Send payment to{" "}
-                    <strong>
-                      Salman Saeed Ahmed: <b>03709963350</b>
-                    </strong>{" "}
-                    (EasyPaisa)
+                    <strong>Salman Saeed Ahmed: 03709963350</strong> (EasyPaisa)
                   </p>
                 )}
               </div>
@@ -328,9 +329,8 @@ const MUNRegistrationForm = () => {
               className="border border-green-300 rounded-lg p-3 w-full"
             />
 
-            {/* Payment Proof */}
+            {/* Step-by-step guide */}
             <div className="md:col-span-2">
-              {/* Step-by-step guide */}
               <div className="mt-3 p-3 bg-blue-50 border border-blue-300 rounded-lg text-sm text-gray-700">
                 <p className="font-semibold text-blue-800 mb-1">
                   📌 How to upload your screenshot:
@@ -372,7 +372,6 @@ const MUNRegistrationForm = () => {
             </div>
           </div>
 
-          {/* Submit Button */}
           <div className="md:col-span-2 text-center mt-6">
             <button
               type="submit"
@@ -383,7 +382,6 @@ const MUNRegistrationForm = () => {
             </button>
           </div>
 
-          {/* ✅ Success Message */}
           {success && (
             <p className="text-green-700 text-center mt-4">
               ✅ Registration submitted successfully!
@@ -401,14 +399,14 @@ export default MUNRegistrationForm;
 // import { db } from "../../firebase/firebase.js";
 // import { collection, addDoc, Timestamp } from "firebase/firestore";
 
-// const MUNRegistrationForm = () => { */}
+// const MUNRegistrationForm = () => {
 //   const [formData, setFormData] = useState({});
 //   const [loading, setLoading] = useState(false);
 //   const [success, setSuccess] = useState(false);
 
 //   const handleChange = (e) => {
 //     const { name, value } = e.target;
-//     setFormData({ ...formData, [name]: value });
+//     setFormData((prev) => ({ ...prev, [name]: value }));
 //   };
 
 //   const handleSubmit = async (e) => {
@@ -419,13 +417,14 @@ export default MUNRegistrationForm;
 //     try {
 //       await addDoc(collection(db, "students"), {
 //         ...formData,
-//         amount: 2000, // fixed registration fee
+//         amount: 4500, // updated fee to match UI
 //         status: "Pending", // admin will verify payment
 //         createdAt: Timestamp.now(),
 //       });
 
 //       setSuccess(true);
 //       setFormData({});
+//       e.target.reset(); // clears form fields in UI
 //     } catch (error) {
 //       console.error("❌ Error saving form:", error);
 //       alert("❌ Error submitting form. Please try again.");
@@ -511,6 +510,7 @@ export default MUNRegistrationForm;
 //               />
 //             </div>
 //           </div>
+
 //           {/* Academic Information */}
 //           <div>
 //             <h3 className="text-xl font-semibold text-green-800 mb-3">
@@ -542,6 +542,7 @@ export default MUNRegistrationForm;
 //               />
 //             </div>
 //           </div>
+
 //           {/* MUN Experience */}
 //           <div>
 //             <h3 className="text-xl font-semibold text-green-800 mb-3">
@@ -578,20 +579,31 @@ export default MUNRegistrationForm;
 //               </select>
 //             </div>
 //           </div>
+
 //           {/* Committee & Country Preferences */}
 //           <div>
 //             <h3 className="text-xl font-semibold text-green-800 mb-3">
 //               Committee & Country Preferences
 //             </h3>
+
 //             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-//               <input
-//                 type="text"
+//               {/* Dropdown */}
+//               <select
 //                 name="committee"
-//                 placeholder="Committee Preference"
 //                 onChange={handleChange}
 //                 required
-//                 className="border border-green-300 rounded-lg p-3 w-full"
-//               />
+//                 className="border border-green-300 rounded-lg p-3 w-full bg-white text-gray-700"
+//               >
+//                 <option value="" disabled selected>
+//                   Select Committee Preference
+//                 </option>
+//                 <option value="GEC">GEC</option>
+//                 <option value="ECOSOC">ECOSOC</option>
+//                 <option value="UNSC">UNSC</option>
+//                 <option value="PNA">PNA</option>
+//               </select>
+
+//               {/* Country Preferences */}
 //               <input
 //                 type="text"
 //                 name="firstCountry"
@@ -616,10 +628,12 @@ export default MUNRegistrationForm;
 //               />
 //             </div>
 //           </div>
+
 //           {/* Payment Information */}
 //           <h2 className="text-2xl md:text-3xl font-extrabold text-green-800 mb-8 text-center">
 //             💳 Payment Information
 //           </h2>
+
 //           {/* Registration Fee */}
 //           <div className="bg-yellow-50 border border-yellow-300 rounded-lg p-5 mb-8 text-center">
 //             <p className="text-lg font-semibold text-yellow-900">
@@ -633,6 +647,7 @@ export default MUNRegistrationForm;
 //               materials.
 //             </p>
 //           </div>
+
 //           {/* Payment Form */}
 //           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
 //             <select
@@ -648,35 +663,32 @@ export default MUNRegistrationForm;
 //               <option value="EasyPaisa">EasyPaisa</option>
 //             </select>
 
-//             {/* Show Payment Number based on selected method */}
+//             {/* Show Payment Number */}
 //             {formData.paymentMethod && (
 //               <div className="md:col-span-2 bg-green-50 border border-green-300 rounded-lg p-3 text-center">
 //                 {formData.paymentMethod === "JazzCash" && (
 //                   <p>
-//                     Send payment to
+//                     Send payment to{" "}
 //                     <strong>
-//                       {" "}
-//                       Salman Saeed: <b> 03097506051</b>
+//                       Salman Saeed: <b>03097506051</b>
 //                     </strong>{" "}
 //                     (JazzCash)
 //                   </p>
 //                 )}
 //                 {formData.paymentMethod === "SadaPay" && (
 //                   <p>
-//                     Send payment to
+//                     Send payment to{" "}
 //                     <strong>
-//                       {" "}
-//                       Salman Saeed Ahmed: <b> 03097506051</b>
+//                       Salman Saeed Ahmed: <b>03097506051</b>
 //                     </strong>{" "}
 //                     (SadaPay)
 //                   </p>
 //                 )}
 //                 {formData.paymentMethod === "EasyPaisa" && (
 //                   <p>
-//                     Send payment to
+//                     Send payment to{" "}
 //                     <strong>
-//                       {" "}
-//                       Salman Saeed Ahmed: <b> 03709963350</b>
+//                       Salman Saeed Ahmed: <b>03709963350</b>
 //                     </strong>{" "}
 //                     (EasyPaisa)
 //                   </p>
@@ -703,11 +715,10 @@ export default MUNRegistrationForm;
 //               required
 //               className="border border-green-300 rounded-lg p-3 w-full"
 //             />
-
 //             <input
 //               type="url"
 //               name="paymentProof"
-//               placeholder="Paste payment screenshot link (Google Drive / Photos)"
+//               placeholder="Paste Google Photos / Drive link of your screenshot"
 //               value={formData.paymentProof || ""}
 //               onChange={handleChange}
 //               required
@@ -716,44 +727,48 @@ export default MUNRegistrationForm;
 
 //             {/* Payment Proof */}
 //             <div className="md:col-span-2">
-//               <label className="block text-green-800 font-semibold mb-2">
-//                 Upload Payment Proof
-//               </label>
-//               <input
-//                 type="url"
-//                 name="paymentProof"
-//                 placeholder="Paste Google Photos / Drive link of your screenshot"
-//                 value={formData.paymentProof || ""}
-//                 onChange={handleChange}
-//                 required
-//                 className="border border-green-300 rounded-lg p-3 w-full"
-//               />
-
-//               {/* Helper links */}
-//               <div className="mt-2 text-center">
-//                 <a
-//                   href="https://photos.google.com/"
-//                   target="_blank"
-//                   rel="noopener noreferrer"
-//                   className="text-blue-600 underline hover:text-blue-800 mr-4"
-//                 >
-//                   📸 Open Google Photos
-//                 </a>
-//                 <a
-//                   href="https://drive.google.com/drive/my-drive"
-//                   target="_blank"
-//                   rel="noopener noreferrer"
-//                   className="text-blue-600 underline hover:text-blue-800"
-//                 >
-//                   📂 Open Google Drive
-//                 </a>
-//                 <p className="text-sm text-gray-600 mt-1">
-//                   Upload your screenshot, copy the shareable link, and paste it
-//                   above.
+//               {/* Step-by-step guide */}
+//               <div className="mt-3 p-3 bg-blue-50 border border-blue-300 rounded-lg text-sm text-gray-700">
+//                 <p className="font-semibold text-blue-800 mb-1">
+//                   📌 How to upload your screenshot:
 //                 </p>
+//                 <ol className="list-decimal list-inside space-y-1">
+//                   <li>
+//                     Open{" "}
+//                     <a
+//                       href="https://photos.google.com/"
+//                       target="_blank"
+//                       rel="noopener noreferrer"
+//                       className="text-blue-600 underline hover:text-blue-800"
+//                     >
+//                       Google Photos
+//                     </a>{" "}
+//                     or{" "}
+//                     <a
+//                       href="https://drive.google.com/"
+//                       target="_blank"
+//                       rel="noopener noreferrer"
+//                       className="text-blue-600 underline hover:text-blue-800"
+//                     >
+//                       Google Drive
+//                     </a>
+//                     .
+//                   </li>
+//                   <li>Upload your payment screenshot there.</li>
+//                   <li>
+//                     Right-click the image → select <b>“Get Link”</b> or{" "}
+//                     <b>“Copy Link”</b>.
+//                   </li>
+//                   <li>
+//                     Make sure link sharing is set to{" "}
+//                     <b>“Anyone with the link”</b>.
+//                   </li>
+//                   <li>Paste the copied link into the field above ✅</li>
+//                 </ol>
 //               </div>
 //             </div>
 //           </div>
+
 //           {/* Submit Button */}
 //           <div className="md:col-span-2 text-center mt-6">
 //             <button
@@ -764,6 +779,7 @@ export default MUNRegistrationForm;
 //               {loading ? "Submitting..." : "🚀 Submit Registration"}
 //             </button>
 //           </div>
+
 //           {/* ✅ Success Message */}
 //           {success && (
 //             <p className="text-green-700 text-center mt-4">

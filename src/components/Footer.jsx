@@ -123,7 +123,7 @@ const Footer = () => {
       <div className="relative text-center text-sm text-green-300 py-4 border-t border-green-700">
         <p>© {new Date().getFullYear()} Genesis MUN. All rights reserved.</p>
         <p className="mt-1 text-xs text-green-400">
-          Made by <span className="font-semibold">Mr. Zi</span>
+          Made by <span className="font-semibold">Mr.Ghazi</span>
         </p>
       </div>
     </footer>
