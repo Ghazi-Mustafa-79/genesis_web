@@ -1,5 +1,5 @@
 import React from "react";
-import { motion } from "framer-motion";
+import { motion as Motion } from "framer-motion";
 import { Globe, Users, MessageSquare, Award } from "lucide-react";
 
 const WhatIsMUN = () => {
@@ -11,7 +11,7 @@ const WhatIsMUN = () => {
 
       <div className="relative max-w-6xl mx-auto text-center">
         {/* Heading */}
-        <motion.h2
+        <Mothin.h2
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
@@ -19,10 +19,10 @@ const WhatIsMUN = () => {
           className="text-3xl md:text-5xl font-extrabold tracking-wide text-[#2f4f2f] mb-6 drop-shadow-lg"
         >
           🌍 What is MUN?
-        </motion.h2>
+        </Mothin.h2>
 
         {/* Intro */}
-        <motion.p
+        <Mothin.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.7 }}
@@ -33,7 +33,7 @@ const WhatIsMUN = () => {
           diplomats—representing countries, debating real issues, and crafting
           solutions. It’s a place to sharpen your voice, ideas, and leadership
           for the real world.
-        </motion.p>
+        </Mothin.p>
 
         {/* Info Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8 text-left">
@@ -65,7 +65,7 @@ const WhatIsMUN = () => {
           ].map((item, i) => {
             const Icon = item.icon;
             return (
-              <motion.div
+              <Mothin.div
                 key={i}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -82,7 +82,7 @@ const WhatIsMUN = () => {
                 <p className="text-sm md:text-base text-gray-700 font-medium leading-snug">
                   {item.desc}
                 </p>
-              </motion.div>
+              </Mothin.div>
             );
           })}
         </div>
