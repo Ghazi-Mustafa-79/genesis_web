@@ -3,6 +3,7 @@ import { motion as Motion } from "framer-motion";
 import { Users, Globe2, Target, Sparkles } from "lucide-react";
 import TeamCircle from "../components/TeamCircle";
 import WhatIsMUN from "../components/WhatIsMUN";
+import DevelopersSection from "../components/DevelopersSection";
 
 const AboutSection = () => {
   const cards = [
@@ -103,6 +104,7 @@ const AboutSection = () => {
         >
           <TeamCircle />
           <WhatIsMUN />
+          <DevelopersSection />
           Our Journey
         </Motion.h3>
         <div className="relative">

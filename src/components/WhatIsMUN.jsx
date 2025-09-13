@@ -4,7 +4,7 @@ import { Globe, Users, MessageSquare, Award } from "lucide-react";
 
 const WhatIsMUN = () => {
   return (
-    <section className="relative py-16 px-4 md:px-10 bg-gradient-to-br from-[#f2eab8] via-[#e6f5d6] to-[#dff7f0] overflow-hidden rounded-[2rem] shadow-inner">
+    <section className="relative mb-[60px] py-16 px-4 md:px-10 bg-gradient-to-br from-[#f2eab8] via-[#e6f5d6] to-[#dff7f0] overflow-hidden rounded-[2rem] shadow-inner">
       {/* Decorative glowing shapes */}
       <div className="absolute -top-10 -left-10 w-36 h-36 bg-green-300 rounded-full blur-3xl opacity-30"></div>
       <div className="absolute bottom-0 right-0 w-44 h-44 bg-yellow-300 rounded-full blur-3xl opacity-20"></div>
