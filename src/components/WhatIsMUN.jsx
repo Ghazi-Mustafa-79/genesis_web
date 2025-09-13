@@ -11,7 +11,7 @@ const WhatIsMUN = () => {
 
       <div className="relative max-w-6xl mx-auto text-center">
         {/* Heading */}
-        <Mothin.h2
+        <Motion.h2
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
@@ -19,10 +19,10 @@ const WhatIsMUN = () => {
           className="text-3xl md:text-5xl font-extrabold tracking-wide text-[#2f4f2f] mb-6 drop-shadow-lg"
         >
           🌍 What is MUN?
-        </Mothin.h2>
+        </Motion.h2>
 
         {/* Intro */}
-        <Mothin.p
+        <Motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.7 }}
@@ -33,7 +33,7 @@ const WhatIsMUN = () => {
           diplomats—representing countries, debating real issues, and crafting
           solutions. It’s a place to sharpen your voice, ideas, and leadership
           for the real world.
-        </Mothin.p>
+        </Motion.p>
 
         {/* Info Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8 text-left">
@@ -65,7 +65,7 @@ const WhatIsMUN = () => {
           ].map((item, i) => {
             const Icon = item.icon;
             return (
-              <Mothin.div
+              <Motion.div
                 key={i}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -82,7 +82,7 @@ const WhatIsMUN = () => {
                 <p className="text-sm md:text-base text-gray-700 font-medium leading-snug">
                   {item.desc}
                 </p>
-              </Mothin.div>
+              </Motion.div>
             );
           })}
         </div>
