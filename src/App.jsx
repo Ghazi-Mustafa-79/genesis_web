@@ -10,7 +10,6 @@ import LogisticsForm from "./pages/form/LogisticsForm";
 import ChairACDForm from "./pages/form/ChairACDForm";
 import ScrollToTop from "./components/ScrollToTop";
 import HomeLinks from "./components/HomeLinks";
-import CountdownTimer from "./components/CountdownTimer";
 
 function App() {
   return (
@@ -19,7 +18,7 @@ function App() {
 
       <div className="flex flex-col min-h-screen">
         {/* Navbar */}
-        <CountdownTimer />
+
         <Navbar />
 
         {/* Main content with top padding so it doesn’t overlap navbar */}

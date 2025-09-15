@@ -34,7 +34,7 @@ const Help = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#f2eab8] pt-24 pb-16 px-6 md:mt-[40px] mt-[60px] md:px-20">
+    <div className="min-h-screen bg-[#f2eab8] pt-24 pb-16 px-6 md:px-20">
       {/* Hero Section */}
       <Motion.div
         initial={{ opacity: 0, y: -50 }}

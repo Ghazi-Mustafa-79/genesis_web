@@ -61,7 +61,7 @@ const Navbar = () => {
       initial={{ y: 0, opacity: 1 }}
       animate={showNavbar ? { y: 0, opacity: 1 } : { y: -120, opacity: 0 }}
       transition={{ duration: 0.5, ease: "easeInOut" }}
-      className="text-[#fdf6d9] shadow-lg text-center fixed w-full md:top-[60px] top-[85px] z-40 bg-cover bg-center"
+      className="text-[#fdf6d9] shadow-lg text-center fixed w-full z-40 bg-cover bg-center"
       style={{ backgroundImage: "url('/navbar-bg2.jpeg')" }}
     >
       <div className="max-w-6xl mx-auto px-6 py-3 flex justify-between items-center relative z-50">
