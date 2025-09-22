@@ -30,7 +30,7 @@ const HomeLinks = () => {
     {
       label: "Private Delegate Registration Form",
       icon: <UserPlus />,
-      type: "internal",
+      type: "internal", // ✅ internal (React Router link)
       url: "/MunRegisterForm",
     },
     {
@@ -39,19 +39,19 @@ const HomeLinks = () => {
       type: "file",
       url: "https://drive.google.com/file/d/1Jg17EnKaqsAGLzt0UHaTdGs0J4F4fh9f/view?usp=sharing",
     },
-
     {
       label: "Allotments",
       icon: <ClipboardList />,
-      type: "file",
+      type: "internal", // ✅ FIXED: was "file"
       url: "/AllotmentsList",
     },
-    // {
-    //   label: "CD & ACD Application Form",
-    //   icon: <Users />,
-    //   type: "internal",
-    //   url: "/ChairACDForm",
-    // },
+
+    {
+      label: "Chair Guide",
+      icon: <Users />,
+      type: "internal",
+      url: "/ChairGuide",
+    },
 
     // {
     //   label: "Logistics & Security Team Application",
