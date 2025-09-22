@@ -216,21 +216,15 @@ const MUNRegistrationForm = () => {
                 className="border border-green-300 rounded-lg p-3 w-full bg-white text-gray-700"
               >
                 <option value="">Select Committee Preference</option>
-                <option value="GEC">GEC</option>
                 <option value="ECOSOC">ECOSOC</option>
                 <option value="UNSC">UNSC</option>
-                <option value="PNA">PNA</option>
               </select>
 
               {/* Dynamic placeholders based on committee */}
               <input
                 type="text"
                 name="firstCountry"
-                placeholder={
-                  formData.committee === "PNA"
-                    ? "First Personality Preference"
-                    : "First Country Preference"
-                }
+                placeholder={"First Country Preference"}
                 onChange={handleChange}
                 required
                 className="border border-green-300 rounded-lg p-3 w-full"
@@ -238,22 +232,14 @@ const MUNRegistrationForm = () => {
               <input
                 type="text"
                 name="secondCountry"
-                placeholder={
-                  formData.committee === "PNA"
-                    ? "Second Personality Preference"
-                    : "Second Country Preference"
-                }
+                placeholder={"Second Country Preference"}
                 onChange={handleChange}
                 className="border border-green-300 rounded-lg p-3 w-full"
               />
               <input
                 type="text"
                 name="thirdCountry"
-                placeholder={
-                  formData.committee === "PNA"
-                    ? "Third Personality Preference"
-                    : "Third Country Preference"
-                }
+                placeholder={"Third Country Preference"}
                 onChange={handleChange}
                 className="border border-green-300 rounded-lg p-3 w-full"
               />
