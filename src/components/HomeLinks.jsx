@@ -40,7 +40,12 @@ const HomeLinks = () => {
       url: "https://drive.google.com/file/d/1Jg17EnKaqsAGLzt0UHaTdGs0J4F4fh9f/view?usp=sharing",
     },
 
-    { label: "Allotments", icon: <ClipboardList />, type: "file", url: "#" },
+    {
+      label: "Allotments",
+      icon: <ClipboardList />,
+      type: "file",
+      url: "/AllotmentsList",
+    },
     // {
     //   label: "CD & ACD Application Form",
     //   icon: <Users />,

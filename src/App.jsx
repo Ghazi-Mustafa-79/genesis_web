@@ -10,6 +10,7 @@ import LogisticsForm from "./pages/form/LogisticsForm";
 import ChairACDForm from "./pages/form/ChairACDForm";
 import ScrollToTop from "./components/ScrollToTop";
 import HomeLinks from "./components/HomeLinks";
+import AllotmentsList from "./components/AllotmentsList";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
             <Route path="/MunRegisterForm" element={<MUNRegistrationForm />} />
             <Route path="/HomeLinks" element={<HomeLinks />} />
             <Route path="/Help" element={<Help />} />
+            <Route path="/AllotmentsList" element={<AllotmentsList />} />
           </Routes>
         </main>
 
