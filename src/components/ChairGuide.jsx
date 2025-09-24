@@ -1,21 +1,34 @@
 import React from "react";
 import { motion as Motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { FileText, Globe } from "lucide-react";
+// import { FileText, Globe } from "lucide-react";
+import { Globe, FileText, Users, BookOpen } from "lucide-react";
 
 // Example: you can add type to know if it's internal or external
-const AllotmentsList = () => {
+const ChairGuide = () => {
   const links = [
     {
       label: "GEC",
-      icon: <Globe size={28} />,
-      url: "https://drive.google.com/file/d/1b32cdJG57AldIPejHyyPxZMXTKhN7DEG/view?usp=sharing",
+      icon: <Globe size={28} />, // 🌍 Global Economic Council
+      url: "https://drive.google.com/file/d/1zPkTnPmuqyHSLNeWHDfQnN_rAWz5v1U5/view?usp=sharing",
       external: true,
     },
     {
       label: "PNA",
-      icon: <FileText size={28} />,
-      url: "https://drive.google.com/file/d/1YtOIgMyLMGEZLWNNk-zxnQHxJphXW1ac/view?usp=sharing",
+      icon: <FileText size={28} />, // 📄 Pakistan National Assembly (documents/policies)
+      url: "https://drive.google.com/file/d/1H2hiJ26YaJmhE6WDFVYuVbhPby0oHCfY/view?usp=sharing",
+      external: true,
+    },
+    {
+      label: "UNSC",
+      icon: <Users size={28} />, // 👥 United Nations Security Council (countries, delegates)
+      url: "https://drive.google.com/file/d/1UuK2lYxwJT0iM_-_qeB_ZHxcl0sP4Pyt/view?usp=sharing",
+      external: true,
+    },
+    {
+      label: "ECOSOC",
+      icon: <BookOpen size={28} />, // 📖 Economic & Social Council (research, reports)
+      url: "https://drive.google.com/file/d/1lzuEU9m5h-YoTa42OQcNdptc5sUteA0c/view?usp=sharing",
       external: true,
     },
   ];
@@ -99,4 +112,4 @@ const AllotmentsList = () => {
   );
 };
 
-export default AllotmentsList;
+export default ChairGuide;

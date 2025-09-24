@@ -11,6 +11,7 @@ import ChairACDForm from "./pages/form/ChairACDForm";
 import ScrollToTop from "./components/ScrollToTop";
 import HomeLinks from "./components/HomeLinks";
 import AllotmentsList from "./components/AllotmentsList";
+import ChairGuide from "./components/ChairGuide";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
             <Route path="/HomeLinks" element={<HomeLinks />} />
             <Route path="/Help" element={<Help />} />
             <Route path="/AllotmentsList" element={<AllotmentsList />} />
+            <Route path="/ChairGuide" element={<ChairGuide />} />
           </Routes>
         </main>
 
