@@ -22,7 +22,7 @@ const ChairGuide = () => {
     {
       label: "UNSC",
       icon: <Users size={28} />, // 👥 United Nations Security Council (countries, delegates)
-      url: "https://drive.google.com/file/d/1UuK2lYxwJT0iM_-_qeB_ZHxcl0sP4Pyt/view?usp=sharing",
+      url: "https://drive.google.com/file/d/1-Q7GYRJNp7hPHyu1e-Tw3sGJk7gdQuGB/view?usp=sharing",
       external: true,
     },
     {
