@@ -1,7 +1,7 @@
 import React from "react";
 import { motion as Motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { FileText, Globe, BookOpen } from "lucide-react";
+import { FileText, Globe, Users, BookOpen } from "lucide-react";
 
 // Example: you can add type to know if it's internal or external
 const AllotmentsList = () => {
@@ -18,16 +18,16 @@ const AllotmentsList = () => {
       url: "https://drive.google.com/file/d/1YtOIgMyLMGEZLWNNk-zxnQHxJphXW1ac/view?usp=sharing",
       external: true,
     },
-    // {
-    //   label: "UNSC",
-    //   icon: <Users size={28} />, // 👥 United Nations Security Council (countries, delegates)
-    //   url: "https://drive.google.com/file/d/1UuK2lYxwJT0iM_-_qeB_ZHxcl0sP4Pyt/view?usp=sharing",
-    //   external: true,
-    // },
+    {
+      label: "UNSC",
+      icon: <Users size={28} />, // 👥 United Nations Security Council (countries, delegates)
+      url: "https://drive.google.com/file/d/1cSprQU9YRkOh6bjbTPy7-ddq_eGgMPPu/view?usp=sharing",
+      external: true,
+    },
     {
       label: "ECOSOC",
       icon: <BookOpen size={28} />, // 📖 Economic & Social Council (research, reports)
-      url: "https://drive.google.com/file/d/1_S2eSQ0kzSe7DjcPSJ3DLAt-v_wmgAmY/view?usp=sharing",
+      url: "https://drive.google.com/file/d/13Dv6HqOp13_u66QguOwXBfjnL9odqdvQ/view?usp=sharing",
       external: true,
     },
   ];
